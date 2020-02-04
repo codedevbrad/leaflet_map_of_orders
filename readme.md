@@ -1,6 +1,6 @@
 
 ## setup
- * create a env.js file in /src/ and populate with
+ * create a env.js file in /src/ and populate with: </br>
  export const accessToken = 'key for mapbox access token'; <br/>
  export const geoJsonKey  = 'key for 'https://geocoder.ls.hereapi.com/'
 
