@@ -17,9 +17,11 @@
 - add the orders array structure to .readme and explain the reasoning + how to populate the orders array.
 
 - add a element for taking in random plot points within an area. 
-     - pick a chosen city.
-     - use the postcoder api to addresses within a proximity of city
+     - pick a chosen city and business location.
+     - create a circle radius around the location with size inputted as your customer distance.
+     - use the postcoder api to addresses within the chosen radius.
            - https://developer.here.com/documentation/geocoder/dev_guide/topics/example-reverse-geocoding.html
+          
     
  - add a polygon for a shape of the city where orders were placed in.
            - https://developer.here.com/documentation/geocoder/dev_guide/topics/example-reverse-geocoding-shape.html
