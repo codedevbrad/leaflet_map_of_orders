@@ -14,6 +14,16 @@
 
 
 ### to do:
+- add the orders array structure to .readme and explain the reasoning + how to populate the orders array.
+
+- add a element for taking in random plot points within an area. 
+     - pick a chosen city.
+     - use the postcoder api to addresses within a proximity of city
+           - https://developer.here.com/documentation/geocoder/dev_guide/topics/example-reverse-geocoding.html
+    
+ - add a polygon for a shape of the city where orders were placed in.
+           - https://developer.here.com/documentation/geocoder/dev_guide/topics/example-reverse-geocoding-shape.html
+     
 - build the districts only once and return the correct array for districts to use as a static array.
     - so it doesnt need to built on every refresh.
 
