@@ -1,34 +1,63 @@
 <html >
     <head>
-
-      <link rel="stylesheet" type="text/css" href='./css/normalise.css'/>
-      <link rel="stylesheet" type="text/css" href='./css/styles.css'/>
-      <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-   crossorigin=""/>
+          <meta charset="utf-8" />
+          <!-- <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" /> -->
+          <!-- <link rel="manifest" href="manifest.json" /> -->
+          <meta name="viewport"content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta name="theme-color" content="#000000" />
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+          <title> interactive map of orders </title>
+          <link href='./css/appbundle.css' rel='stylesheet' />
+          <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+                                 integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+                                 crossorigin=""/>
     </head>
     <body>
-        <div id="map_container">  </div>
-
-        <div id="map_controls">
-            <div id="map_buttons">
-                <ul>
-                    <li id="map_center"> map center     </li>
-                    <li id="map_bubble"> bubble markers </li>
-                    <li id="map_single"> single markers </li>
-                </ul>
-            </div>
-            <div id="map_keys">
-                <div>
-                    <ul>
-
-                    </ul>
-                </div>
-            </div>
+        <div id="outer">
+           <div id='inner_move'>
+               <div id="map_container_flow">
+                   <div id="map_container"> </div>
+                   <div id="map_controls">
+                         <div id="map_buttons">
+                             <ul>
+                                 <li id="map_center"> map center     </li>
+                                 <li id="map_bubble"> bubble markers </li>
+                                 <li id="map_single"> single markers </li>
+                             </ul>
+                         </div>
+                         <div id="map_keys">
+                             <div>
+                                 <h3 id="data_add" class="modal_add" modal-id="id1"> add your own data </h3>
+                                 <ul> </ul>
+                             </div>
+                         </div>
+                   </div>
+               </div>
+               <div id="navigation_el">
+                    <div id="close_navMenu">
+                        <i class="far fa-times-circle"></i>
+                    </div>
+                    <h2 id="navigation_title"> create your own map </h2>
+                    <div id="locationPicker">
+                        <div id="location_pick_value">
+                            <h3> tip: press the button and click anywhere on the map to set a base location </h3>
+                        </div>
+                        <h3 id="loc_pick_btn"> choose a base location </h3>
+                    </div>
+                    <div id="submit_map_data">
+                        <h3> generate new map </h3>
+                    </div>
+               </div>
+           </div>
         </div>
 
+        <script type="text/javascript" ,
+               defer='',
+               src='https://use.fontawesome.com/releases/v5.3.1/js/all.js',
+               integrity='sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB',
+               crossorigin='anonymous'>
+        </script>
         <script src="./build/index.js"> </script>
-        <script src="./build/buildData.js"> </script>
     </body>
 </html>
