@@ -44,7 +44,7 @@
     // 51.128179 , -2.808727
     // 51.12881  , -2.80968
 
-    let api = 'lxGK4LvmpuYfQchLrAJ82zMcixLvpooMsR3vxPDoMGw';
+    let api = '';
               fetch( `https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=${ api }&mode=retrieveAddresses&prox=51.128179 , -2.808727 , 3000` )
             			.then(  res => res.json())
                   .then( data => console.log( data.Response.View[0].Result ))
