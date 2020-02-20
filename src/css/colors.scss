@@ -1,0 +1,15 @@
+$themeColor-Light: #f3e2c7;
+$themeColor-Dark:#b68d4c;
+
+$lightGreyBackground: #f2f2f2;
+
+@mixin button_style( $paddingVertical , $paddingSide , $background_color , $color) {
+  width: 100%;
+  font-size: 0.6em;
+  color: $color;
+  padding: $paddingVertical $paddingSide;
+  background: $background_color;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}

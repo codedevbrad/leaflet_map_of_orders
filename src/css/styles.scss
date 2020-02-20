@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
+@import 'colors';
+
+* { -webkit-font-smoothing: antialiased; }
+
+h1, h2, h3, h4, a, li, p, input, label, textarea, button {
+  font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.87em; letter-spacing: 0em;
+  color: black;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+     box-sizing: border-box;
+}
+
+input , button { font-weight: 400; }
+body { background: white; padding: 0; margin: 0; }
+div, h1, h2 , h3 , ul , li { margin: 0; padding: 0; }
+
+#outer {
+   width: 100%; height: 100%; overflow: hidden;
+}
+#outer > #inner_move {
+    width: 100%; height: 100%; display: flex;
+}
+
+div#map_container_flow {
+    width: 100%; height: 100%; position: relative;
+}
+div#navigation_el {
+    width: 270px; height: 100%; position: relative; word-wrap: break-word; padding: 20px;
+    font-size: 0.7em; display: flex; flex-direction: column;
+
+    #navigation_title {
+       font-size: 2em; padding: 20px 0;
+    }
+    #close_navMenu  {
+        position: absolute; top: 20; right: 20;  cursor: pointer;
+        svg , i { font-size: 2em; }
+    }
+    #locationPicker {
+        height: 100%;
+        h3 {
+             @include button_style( 10px , 10px , blue , white );
+             font-size: 1em;
+        }
+        #location_pick_value {
+            h3 { @include button_style( 10px , 10px , $lightGreyBackground , black );
+                 font-size: 0.85em;
+            }
+        }
+    }
+    #submit_map_data {
+        flex: 0 0 30%; display: flex; justify-content: center;
+        align-items: center;
+        h3 {
+           @include button_style( 11px , 5px , yellow , black );
+           text-align: center; font-size: 1em;
+        }
+    }
+}
+
+#map_container {
+  width: 100%; height: 100%;
+}
+
+#map_buttons {
+    position: absolute; right: 10; top: 10; z-index: 9999;
+    ul { width: 100%; display: flex; padding: 7px 0; }
+    > ul > li {
+       background: white; margin-left: 10px; border-radius: 4px; padding: 5px 10px;
+       font-size: 0.75em; z-index: 9999; cursor: pointer;
+       box-shadow: 2px 5px 11px 0px #150505;
+    }
+}
+#map_keys {
+    position: absolute; right: 10; top: 55; z-index: 9999; background: white;  border-radius: 15px;
+    width: auto; overflow: hidden; padding: 0; display: flex; justify-content: flex-end;
+    box-shadow: 2px 5px 11px 0px #150505;
+
+    #data_add {
+      @include button_style( 10px , 10px , blue , white );
+    }
+
+    > div { height: 100%; padding: 10px; background: white; }
+
+    ul {
+      list-style: none; width: auto; height: 93%; overflow-y: scroll; padding: 0 6px;
+    }
+    ul > li {
+      list-style: none; margin: 10 0; padding: 9px 10px; background: #f4f4f4; font-size: 0.75em;
+      cursor: pointer; border-radius: 8px;
+    }
+    ul > li:last-child {
+      margin-bottom: 40px;
+    }
+
+    ul > li span {
+      background: #ff7b7b; padding: 2px 10px; margin-left: 10px; border-radius: 3px; color: white;
+    }
+
+    > div > .dropdown {
+      width: 100%;
+    }
+}
+
+/* map marker styles */
+
+div.my-div-icon {
+   width: auto !important; height: auto !important; display: block; align-items: center;
+   justify-content: center;
+}
+
+.circle_outer {
+   width: 40px; height: 40px; border-radius: 50%; color: white;
+   display: flex; justify-content: center; align-items: center;
+}
+
+
+/* */
