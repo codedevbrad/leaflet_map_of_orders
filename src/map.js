@@ -23,13 +23,6 @@ class SidebarBuild {
       this.bindEvents();
     }
 
-    navClosedBuildMap ( ) {
-        this.htmlObj.close_navMenu();
-        // build mapObj with radius and location.
-        // build mapData with chosen data.
-        // either default map of orders or new chosen map.
-    }
-
     resetAllmap() {
         this.mapObj.resetMap();
         this.mapData.cleanMapData();
@@ -41,7 +34,6 @@ class SidebarBuild {
        this.location = null;
     }
 
-
     setClickableLocation( map , shouldClick ) {
         if ( shouldClick ) {
             map.on('click', ( e ) => {
@@ -49,7 +41,7 @@ class SidebarBuild {
                 this.createCenterMarker( [ e.latlng.lat , e.latlng.lng ] , 'your chosen location' );
             });
         } else {
-            map.off(click );
+            map.off( 'click' );
         }
     }
 
@@ -72,29 +64,35 @@ class SidebarBuild {
         this.chooseLocationBtn.innerHTML = 'select somewhere...';
     }
 
-    buildNewMap ( ) {
+    buildNewMap ( elementText ) {
         ( async () => {
+              elementText.innerHTML = 'generating new map';
               let data = await buildMapData( this.location[0] , this.location[1] );
-              // set center map radius
-              // set new map center point for center position button.
-              // generate new map points
+
+              setTimeout( ( ) => {
+                  elementText.innerHTML = 'new map has been created';
+                  this.mapData.setNewMapData( data );
+                  this.mapObj.changeMap( this.location , 9 , 29000 , 'new location' );
+                  this.resetChosenMarkers();
+              } , 1000 );
         })( );
     }
-
 
     bindEvents() {
         this.$('#loc_pick_btn').addEventListener('click' , ( e ) => {
             this.chooseLocation();
         });
-        this.$('#submit_map_data').addEventListener('click' , async ( ) => {
+        this.$('#submit_map_data').addEventListener('click' , async ( e ) => {
             if ( this.location === null ) return;
-            this.buildNewMap();
+            this.buildNewMap( e.target );
         });
         this.$('#close_navMenu').addEventListener('click' , ( ) => {
             // use the html Object animation method.
             this.mapKeys.style.visibility = 'visible';
             this.chooseLocationBtn.innerHTML = 'choose a base location';
-            this.navClosedBuildMap();
+            this.htmlObj.close_navMenu();
+            this.setClickableLocation( this.map , false );
+            this.mapObj.flyToLocation();
         });
     }
 
@@ -104,16 +102,16 @@ class SidebarBuild {
 }
 
 class MapBuild {
-    constructor( center , zoom , radius ) {
+    constructor( element , center , zoom , radius , centerText ) {
         this.center  = center;
         this.zoom    = zoom;
         this.radius  = radius;
         this.currentMarkers  = [ ];
 
-        this.map = L.map('map_container').setView( this.center , this.zoom );
+        this.map = L.map( element ).setView( this.center , this.zoom );
         this.mapStyle = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={ accessToken }`;
 
-        this.setEverything();
+        this.setEverything( centerText );
     }
 
     publicMethods()  {
@@ -123,17 +121,25 @@ class MapBuild {
        }
     }
 
-    changeMap( center , zoom , radius ) {
+    refreshMapTiles () {
+        this.map.invalidateSize();
+    }
+
+    flyToLocation() {
+        this.map.flyTo( this.center , this.zoom );
+    }
+
+    changeMap( center , zoom , radius , centerText ) {
         this.center = center;
         this.zoom   = zoom;
         this.radius = radius;
-        this.setEverything();
+        this.setEverything( centerText );
     }
 
-    setEverything () {
+    setEverything ( centerText ) {
         this.resetMap();
         this.setMap();
-        this.setCenterMarker( this.center , 'a business location' );
+        this.setCenterMarker( this.center , centerText );
         this.setCenterRadius();
     }
 
@@ -158,7 +164,7 @@ class MapBuild {
         this.currentMarkers.push( marker );
     }
     setCenterRadius() {
-        let centerRadius = L.circle( this.center , { color: 'red' , fillColor:  '#f03', fillOpacity: 0.1 , radius: 32200.0 })
+        let centerRadius = L.circle( this.center , { color: 'red' , fillColor:  '#f03', fillOpacity: 0.1 , radius: this.radius })
                             .addTo(  this.map );
         this.currentMarkers.push( centerRadius );
     }
@@ -178,22 +184,19 @@ class MapData {
       this.element        = document.querySelector('#map_controls');
       this.colorChoices   = [ '#ff6b6b' , '#5f27cd' , '#ff9f43' , '#10ac84' , '#222f3e' , '#40407a' ,
                               '#b33939' ,'#ff6b81' , '#5352ed' ];
-
       this.currentMarkers = [ ];
-      this.orders         = orders;
-      this.districts      = this.cleanKeys();
 
-      // methods
-      this.populateMapKeys( this.districts , this.$( '#map_keys > div > ul' ) );
-      this.displayBubbleMarkers( this.districts );
-      this.bindEvents();
+      // set markers.
+      this.setNewMapData( orders );
     }
 
     setNewMapData( newData ) {
        this.cleanMapData();
        this.orders = newData;
-       this.districts = this.cleanKeys;
+       this.districts = this.cleanKeys();
        this.displayBubbleMarkers( this.districts );
+       this.populateMapKeys( this.districts , this.$( '#map_keys > div > ul' ) );
+       this.bindEvents();
     }
 
     cleanMapData() {
@@ -271,6 +274,9 @@ class MapData {
     }
 
     populateMapKeys( array , element ) {
+        // remove any elements in element first ...
+        element.innerHTML = '';
+        // populate with new content.
         array.forEach( ( item , i ) => {
             let { City , Data , Color } = item;
             let fm = Data[0].position;
@@ -310,10 +316,44 @@ class HTMLBuild {
       this.navSize = 270;
       this.leftMap = this.$('#map_container_flow');
       this.toggle  = false;
+      this.obj     = {
+           defaultData: orders ,
+           center: [ 51.128179 , -2.808727 ] , zoom: 9.45 , radius: 32200.0 ,
+           centerText: 'business location'
+      }
+
+      this.map_key_element  = this.$('#map_controls');
+
+      this.loading_component = this.$('#loading_component');
+      this.loading_animate   = this.$('#map_circle > #load > div');
       // events..
-      this.setMainWidth(  )
       this.events();
     }
+
+    loadingAnimation ( ) {
+        let { center , zoom , radius , centerText } = this.obj;
+
+        setTimeout( ( ) => {
+            var countInterval = 10;
+            var countPercent = 100 / countInterval;
+
+            for ( let i = 0; i <= countPercent; i++ ) {
+                this.loading_animate.style.width = `${ i }0px `;
+            }
+
+            setTimeout( ( ) => {
+                this.loading_component.style.display = 'none';
+                this.outer.style.display = 'block';
+                this.setMainWidth(  );
+
+                var mapContent   = new MapBuild( 'map_container' , center , zoom , radius , centerText );
+                var mapDatas     = new MapData(  orders , mapContent );
+                var sideSelect   = new SidebarBuild( mapContent , mapDatas , this );
+                mapContent.mapEvents( mapContent.map );
+            } , 2000 );
+        }, 1500 );
+    }
+
     setMainWidth ( ) {
         // set main width to windowWidth + sideBar width.
        this.inner.style.width   = outer.getBoundingClientRect().width + this.navSize + 'px';
@@ -334,7 +374,7 @@ class HTMLBuild {
         window.onresize = ( ) => {
               clearTimeout(doit);
               doit = setTimeout( () => {
-                  this.setMainWidth();
+                    this.setMainWidth();
               } , 100 );
         }
         this.$('#data_add').addEventListener('click' , ( ) => {
@@ -355,22 +395,9 @@ class HTMLBuild {
 
 
 ( ( ) => {
-    // let htmlContent  = new HTMLBuild(  window.innerWidth );
-    let center = [ 51.128179 , -2.808727 ];
-    let zoom   = 9.45;
-    let radius = 32200.0;
 
     // if center or radius changes. we need our mapContent and keyContainer to change.
     var htmlBuild    = new HTMLBuild();
-    var mapContent   = new MapBuild( center , zoom , radius );
-    var mapDatas     = new MapData(  orders , mapContent );
-    var sideSelect   = new SidebarBuild( mapContent , mapDatas , htmlBuild );
-    mapContent.mapEvents( mapContent.map );
+    htmlBuild.loadingAnimation( );
 
-    // setTimeout( ( ) => {
-    //     console.log( 'changing');
-    //     mapContent.changeMap( [ 51.208367, -2.647101 ] , 9 , 2000 );
-    // }, 1000 );
 })( );
-
-//

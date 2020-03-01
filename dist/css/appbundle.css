@@ -74,10 +74,61 @@ div, h1, h2, h3, ul, li {
   margin: 0;
   padding: 0; }
 
-#outer {
-  width: 100%;
-  height: 100%;
-  overflow: hidden; }
+body {
+  display: flex;
+  flex-direction: column; }
+  body header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ddfff9; }
+    body header div {
+      margin: 7px 0;
+      background: white;
+      cursor: pointer; }
+    body header div > h3 {
+      border: 1px solid black;
+      box-shadow: 3px 2px black;
+      padding: 3px 15px;
+      font-size: 0.65em; }
+  body #map_full_page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    body #map_full_page #loading_component {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      body #map_full_page #loading_component > #map_circle {
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; }
+        body #map_full_page #loading_component > #map_circle h3 {
+          font-size: 2em; }
+        body #map_full_page #loading_component > #map_circle #load {
+          margin-top: 20px;
+          width: 100px;
+          height: 5px;
+          background: white;
+          border: 1px solid black; }
+          body #map_full_page #loading_component > #map_circle #load div {
+            width: 0%;
+            height: 100%;
+            background: red;
+            transition: all 300ms; }
+    body #map_full_page #outer {
+      width: 98%;
+      height: 96%;
+      overflow: hidden;
+      border-radius: 10px;
+      display: none; }
 
 #outer > #inner_move {
   width: 100%;
@@ -151,16 +202,16 @@ div#navigation_el {
   width: 100%;
   height: 100%; }
 
-#map_buttons {
+#map_controls > #map_buttons {
   position: absolute;
   right: 10;
   top: 10;
   z-index: 9999; }
-  #map_buttons ul {
+  #map_controls > #map_buttons ul {
     width: 100%;
     display: flex;
     padding: 7px 0; }
-  #map_buttons > ul > li {
+  #map_controls > #map_buttons > ul > li {
     background: white;
     margin-left: 10px;
     border-radius: 4px;
@@ -170,7 +221,7 @@ div#navigation_el {
     cursor: pointer;
     box-shadow: 2px 5px 11px 0px #150505; }
 
-#map_keys {
+#map_controls > #map_keys {
   position: absolute;
   right: 10;
   top: 55;
@@ -183,7 +234,7 @@ div#navigation_el {
   display: flex;
   justify-content: flex-end;
   box-shadow: 2px 5px 11px 0px #150505; }
-  #map_keys #data_add {
+  #map_controls > #map_keys #data_add {
     width: 100%;
     font-size: 0.6em;
     color: white;
@@ -192,17 +243,17 @@ div#navigation_el {
     margin-bottom: 10px;
     border-radius: 4px;
     cursor: pointer; }
-  #map_keys > div {
+  #map_controls > #map_keys > div {
     height: 100%;
     padding: 10px;
     background: white; }
-  #map_keys ul {
+  #map_controls > #map_keys ul {
     list-style: none;
     width: auto;
     height: 93%;
     overflow-y: scroll;
     padding: 0 6px; }
-  #map_keys ul > li {
+  #map_controls > #map_keys ul > li {
     list-style: none;
     margin: 10 0;
     padding: 9px 10px;
@@ -210,15 +261,15 @@ div#navigation_el {
     font-size: 0.75em;
     cursor: pointer;
     border-radius: 8px; }
-  #map_keys ul > li:last-child {
+  #map_controls > #map_keys ul > li:last-child {
     margin-bottom: 40px; }
-  #map_keys ul > li span {
+  #map_controls > #map_keys ul > li span {
     background: #ff7b7b;
     padding: 2px 10px;
     margin-left: 10px;
     border-radius: 3px;
     color: white; }
-  #map_keys > div > .dropdown {
+  #map_controls > #map_keys > div > .dropdown {
     width: 100%; }
 
 /* map marker styles */

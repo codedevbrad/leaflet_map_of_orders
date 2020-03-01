@@ -8,21 +8,42 @@ h1, h2, h3, h4, a, li, p, input, label, textarea, button {
   color: black;
 }
 
-* {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-     box-sizing: border-box;
-}
+* {  -moz-box-sizing: border-box;  -webkit-box-sizing: border-box;   box-sizing: border-box; }
 
 input , button { font-weight: 400; }
 body { background: white; padding: 0; margin: 0; }
 div, h1, h2 , h3 , ul , li { margin: 0; padding: 0; }
 
-#outer {
-   width: 100%; height: 100%; overflow: hidden;
+body {
+    display: flex; flex-direction: column;
+    header { width: 100%;  display: flex; justify-content: center; align-items: center; background: #ddfff9;
+        div { margin: 7px 0;  background: white; cursor: pointer; }
+        div > h3 { border: 1px solid black; box-shadow: 3px 2px black; padding: 3px 15px;
+                  font-size: 0.65em;
+         }
+    }
+    #map_full_page {
+          width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;
+          #loading_component {
+             width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;
+             > #map_circle {
+                  height: 300px; display: flex; justify-content: center; align-items: center;
+                  flex-direction: column;
+                  h3 { font-size: 2em; }
+                  #load {
+                      margin-top: 20px; width: 100px; height: 5px; background: white; border: 1px solid black;
+                      div { width: 0%; height: 100%; background: red; transition: all 300ms; }
+                  }
+             }
+          }
+          #outer {
+             width: 98%; height: 96%; overflow: hidden; border-radius: 10px; display: none;
+          }
+    }
 }
+
 #outer > #inner_move {
-    width: 100%; height: 100%; display: flex;
+ width: 100%; height: 100%; display: flex;
 }
 
 div#map_container_flow {
@@ -65,7 +86,11 @@ div#navigation_el {
   width: 100%; height: 100%;
 }
 
-#map_buttons {
+#map_controls {
+
+}
+
+#map_controls > #map_buttons {
     position: absolute; right: 10; top: 10; z-index: 9999;
     ul { width: 100%; display: flex; padding: 7px 0; }
     > ul > li {
@@ -74,7 +99,7 @@ div#navigation_el {
        box-shadow: 2px 5px 11px 0px #150505;
     }
 }
-#map_keys {
+#map_controls > #map_keys {
     position: absolute; right: 10; top: 55; z-index: 9999; background: white;  border-radius: 15px;
     width: auto; overflow: hidden; padding: 0; display: flex; justify-content: flex-end;
     box-shadow: 2px 5px 11px 0px #150505;

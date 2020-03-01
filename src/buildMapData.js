@@ -24,8 +24,21 @@ let fakeAddresses = [
 ];
 
 /* default build map data */
-let buildData = async ( addresses ) => {
+
+let buildDefaultData = async ( addresses ) => {
       let latLongs = [ ];
+
+      var getAddress = async ( addressQuery ) => {
+      			let fetched = await fetch(`https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=${ geoJsonKey }&searchtext= ${ addressQuery }`)
+                            .then( data => data.json() )
+                            .then(  loc => loc )
+                            .catch( err => console.log( err ));
+
+             let filtered = fetched.Response.View[0].Result[0].Location;
+             let address  = filtered.Address;
+             let position = filtered.NavigationPosition[0];
+             return { address , position ,  complex: [] , queryAddress: addressQuery };
+      };
 
       for( let i = 0; i < addresses.length; i++ ) {
              let query   = addresses[i];
@@ -35,22 +48,10 @@ let buildData = async ( addresses ) => {
       return latLongs;
 }
 
-var getAddress = async ( addressQuery ) => {
-			let fetched = await fetch(`https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=${ geoJsonKey }&searchtext= ${ addressQuery }`)
-                      .then( data => data.json() )
-                      .then(  loc => loc )
-                      .catch( err => console.log( err ));
-
-       let filtered = fetched.Response.View[0].Result[0].Location;
-       let address  = filtered.Address;
-       let position = filtered.NavigationPosition[0];
-       return { address , position ,  complex: [] , queryAddress: addressQuery };
-};
-
 /* custom user ,map build */
 
 var generateFakeAddresses = async ( lat , lng ) => {
-    let addresses = await fetch( `https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=${ geoJsonKey }&mode=retrieveAddresses&prox=`+lat +',' + lng + 3000 )
+    let addresses = await fetch( `https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=${ geoJsonKey }&mode=retrieveAddresses&prox=`+lat +',' + lng + 7000 )
                       .then(  res => res.json())
                       .then( data => data.Response.View[0].Result );
 
@@ -84,7 +85,7 @@ var loopData = ( arr ) => {
 }
 
 export let buildMapData = async ( lat , lng ) => {
-    // let cleanData  = await buildData( fakeAddresses );
+    // let cleanData  = await buildDefaultData( fakeAddresses );
     let addresses = await generateFakeAddresses( lat , lng );
     let combined  = combineApartments( addresses );
     return combined;
