@@ -1,4 +1,7 @@
 
+## view the project live:
+
+https://codedevbrad.github.io/leaflet_map_of_orders/dist/
 
 
 ## issue with running the project years after development.
@@ -44,6 +47,10 @@ let fakeAddresses = [
      "12 Sandlewood Cl, Yeovil,  BA21 5DY" ]
 ];
 ```
+
+addresses can sometimes belong to the same flat/apartment complex leading to the same lat/long. This would mean markers placed on a map get ovverighted by one another. The solution was to loop through the array of converted addresses and with each address, look for those that were in the same apartment and append them to the object as a sub array called complex. 
+
+This looks like:
 
 ```javascript
 {
