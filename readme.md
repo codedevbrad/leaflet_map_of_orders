@@ -1,7 +1,7 @@
 
 ## view the project live:
 
-https://codedevbrad.github.io/leaflet_map_of_orders/dist/
+https://codedevbrad.github.io/leaflet_map_of_orders/
 
 
 ## issue with running the project years after development.
