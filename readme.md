@@ -1,16 +1,114 @@
 
+
+
+## issue with running the project years after development.
+ *  npm packages seen to now be deprecated and I can't do npm install.
+
 ## setup
  * create a env.js file in /src/ and populate with: </br>
  export const accessToken = 'key for mapbox access token'; <br/>
  export const geoJsonKey  = 'key for 'https://geocoder.ls.hereapi.com/'
 
 ## to run:
-  npm run start:dev for local server <br/>
-  npm run webpack to build files to es5.
+  * open index.html in /dist
 
 ## images:
 <img width="880" alt="save2" src="https://user-images.githubusercontent.com/46296577/73779682-00ed5e00-4785-11ea-8242-cbd5d098d5b9.PNG">
 <img width="960" alt="save1" src="https://user-images.githubusercontent.com/46296577/73779683-0185f480-4785-11ea-9621-3fbbee152d31.PNG">
+
+
+## how I have generated map data.
+
+```javascript
+let fakeAddresses = [
+ 	"19, Anthony Road, Street, Somerset, BA16 0AE" ,
+     "9, Anthony Road, Street, Somerset, BA16 0AE",
+     "6, Bowling Green, Street, Somerset, BA16 0AH",
+     "8, Bowling Green, Street, Somerset, BA16 0AH",
+     "91, Somerton Road, Street, Somerset, BA16 0DN",
+     "1, Water Street, Langport, Somerset, TA10 0AH",
+     "14, Ham Green, Langport, Somerset, TA10 0AR",
+     "10, Ham Green, Langport, Somerset, TA10 0AR",
+     "Orchard End, Butchers Hill, Taunton, Somerset, TA3 6PD",
+     "58, Leycroft Rd, Taunton, TA1 2ED",		
+     "7, Colin Ave, Taunton, TA2 7AT",
+     "8, Rochester Road Taunton TA2 7LB",
+     "66, Warwick Rd, Taunton TA2 7RH",
+     "38, Stoney Furlong, Taunton, TA2 8RY",
+     "40, Stoney Furlong, Taunton, TA2 8RY ",
+     "2, Four Forks Lane, Bridgwater, Somerset, TA5 1AB",
+     "133, Four Forks Lane, Bridgwater, Somerset, TA5 1AB",
+     "Higher Aisholt Farm, Bridgwater, Somerset, TA5 1AP",
+     "Triangle House, Frog Lane, Yeovil, Somerset, BA22 7AJ",
+     "115 Great Mead, Yeovil, BA21 5GB",
+     "12 Sandlewood Cl, Yeovil,  BA21 5DY" ]
+];
+```
+
+```javascript
+{
+      address: {
+        AdditionalData: [{
+            key: "CountryName",
+            value: "United Kingdom"
+        }, {
+            key: "StateName",
+            value: "England"
+        }, {
+            key: "CountyName",
+            value: "Somerset"
+        }],
+        City: "Street",
+        Country: "GBR",
+        County: "Somerset",
+        District: "Street",
+        HouseNumber: "5",
+        Label: "5 Bowling Green, Street, BA16 0AH, United Kingdom",
+        PostalCode: "BA16 0AH",
+        State: "England",
+        Street: "Bowling Green"
+    },
+    complex: [
+        {
+          address: {
+               AdditionalData: [
+                    {
+                         key: "CountryName",
+                         value: "United Kingdom"
+                    }, 
+                    {
+                         key: "StateName",
+                         value: "England"
+                    }, 
+                    {
+                         key: "CountyName",
+                         value: "Somerset"
+                    }
+               ],
+               City: "Street",
+               Country: "GBR",
+               County: "Somerset",
+               District: "Street",
+               HouseNumber: "5",
+               Label: "5 Bowling Green, Street, BA16 0AH, United Kingdom",
+               PostalCode: "BA16 0AH",
+               State: "England",
+               Street: "Bowling Green"
+          },
+          position: {
+               Latitude: 51.1313564,
+               Longitude: -2.7313066
+          },
+          queryAddress: "8, Bowling Green, Street, Somerset, BA16 0AH"
+        }
+    ],
+    position: {
+        Latitude: 51.1313564,
+        Longitude: -2.7313066
+    },
+    queryAddress: "6, Bowling Green, Street, Somerset, BA16 0AH"
+}
+```
 
 
 ### to do:
